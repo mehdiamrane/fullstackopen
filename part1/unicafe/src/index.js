@@ -5,9 +5,10 @@ const Button = (props) => <button onClick={props.onClick}>{props.text}</button>;
 
 const Statistic = (props) => {
   return (
-    <p>
-      {props.text}: {props.value}
-    </p>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
   );
 };
 
@@ -18,14 +19,17 @@ const Statistics = (props) => {
     return (
       <>
         <h1>Stats</h1>
+        <table>
+          <tbody>
+            <Statistic text='Good' value={props.good} />
+            <Statistic text='Neutral' value={props.neutral} />
+            <Statistic text='Bad' value={props.bad} />
 
-        <Statistic text='Good' value={props.good} />
-        <Statistic text='Neutral' value={props.neutral} />
-        <Statistic text='Bad' value={props.bad} />
-
-        <Statistic text='Total' value={props.good} />
-        <Statistic text='Average' value={props.average} />
-        <Statistic text='Positive %' value={props.positivePercentage} />
+            <Statistic text='Total' value={props.good} />
+            <Statistic text='Average' value={props.average} />
+            <Statistic text='Positive' value={props.positivePercentage} />
+          </tbody>
+        </table>
       </>
     );
   }
@@ -63,8 +67,8 @@ const App = () => {
     neutral: neutral,
     bad: bad,
     total: total,
-    average: average,
-    positivePercentage: positivePercentage,
+    average: Math.round(average * 100) / 100,
+    positivePercentage: Math.round(positivePercentage * 100) / 100 + ' %',
   };
 
   return (
