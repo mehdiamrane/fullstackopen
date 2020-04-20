@@ -1,6 +1,21 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
+const Button = (props) => {
+  return <button onClick={props.onClick}>{props.text}</button>;
+};
+
+const AnecdoteBlock = ({ children, ...props }) => {
+  return (
+    <div>
+      <h2>{props.title}</h2>
+      <p>{props.anecdoteToDisplay}</p>
+      <p>- This quote has {props.anecdoteVotes} votes -</p>
+      {children}
+    </div>
+  );
+};
+
 const App = (props) => {
   let startVotes = Array.apply(null, new Array(anecdotes.length)).map(Number.prototype.valueOf, 0);
 
@@ -17,13 +32,24 @@ const App = (props) => {
     setVotes(votesCopy);
   };
 
+  let mostVoted = votes.indexOf(Math.max(...votes));
+
   return (
-    <div>
-      <p>{props.anecdotes[selected]}</p>
-      <button onClick={() => setNewAnecdote()}>Next anecdote</button>
-      <button onClick={() => voteForAnecdote()}>Vote for anecdote</button>
-      <p>- This quote has {votes[selected]} votes -</p>
-    </div>
+    <>
+      <AnecdoteBlock
+        title='Anecdote of the day'
+        anecdoteToDisplay={props.anecdotes[selected]}
+        anecdoteVotes={votes[selected]}
+      >
+        <Button onClick={() => setNewAnecdote()} text='Next anecdote' />
+        <Button onClick={() => voteForAnecdote()} text='Vote for anecdote' />
+      </AnecdoteBlock>
+      <AnecdoteBlock
+        title='Anecdote with most votes'
+        anecdoteToDisplay={props.anecdotes[mostVoted]}
+        anecdoteVotes={votes[mostVoted]}
+      />
+    </>
   );
 };
 
