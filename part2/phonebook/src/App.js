@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import Filter from './components/Filter';
+import PersonForm from './components/PersonForm';
+import Persons from './components/Persons';
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -43,34 +46,20 @@ const App = () => {
       ? persons
       : persons.filter((person) => person.name.toLowerCase().includes(searchedName.toLowerCase()));
 
-  const listOfPersons = personsToDisplay.map((person) => {
-    return (
-      <li key={person.name}>
-        {person.name} ({person.number})
-      </li>
-    );
-  });
-
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        Find by name: <input value={searchedName} onChange={handleSearchedNameChange} />
-      </div>
+      <Filter value={searchedName} handleOnChange={handleSearchedNameChange} />
+
       <h2>Add to phone book</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handleNameInputChange} />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberInputChange} />
-        </div>
-        <div>
-          <button type='submit'>add</button>
-        </div>
-      </form>
+      <PersonForm
+        handleOnSubmit={addPerson}
+        values={[newName, newNumber]}
+        handleOnChange={[handleNameInputChange, handleNumberInputChange]}
+      />
+
       <h2>Numbers</h2>
-      <ul>{listOfPersons}</ul>
+      <Persons personsToDisplay={personsToDisplay} />
     </div>
   );
 };
