@@ -4,11 +4,18 @@ const App = () => {
   const [persons, setPersons] = useState([{ name: 'Arto Hellas' }]);
   const [newName, setNewName] = useState('');
 
+  const nameExists = persons.find((person) => person.name.toLowerCase() === newName.toLowerCase());
+
   const addPerson = (e) => {
     e.preventDefault();
-    const newPersonToAdd = { name: newName };
-    setPersons(persons.concat(newPersonToAdd));
-    setNewName('');
+
+    if (nameExists) {
+      alert(`${newName} is already added to phonebook`);
+    } else {
+      const newPersonToAdd = { name: newName };
+      setPersons(persons.concat(newPersonToAdd));
+      setNewName('');
+    }
   };
 
   const handleNameInputChange = (e) => {
