@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Header = (props) => {
-  return <h1>{props.name}</h1>;
+const Header = ({ name }) => {
+  return <h1>{name}</h1>;
 };
 
-const Part = (props) => {
+const Part = ({ name, exercises }) => {
   return (
     <p>
-      {props.name} {props.exercises}
+      {name} {exercises}
     </p>
   );
 };
