@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 const Header = ({ name }) => {
-  return <h1>{name}</h1>;
+  return <h2>{name}</h2>;
 };
 
 const Part = ({ name, exercises }) => {
@@ -22,7 +22,7 @@ const Content = ({ parts }) => {
 
 const Total = ({ parts }) => {
   const totalAmount = parts.reduce((sum, part) => sum + part.exercises, 0);
-  return <p>Total of {totalAmount} exercises in this course.</p>;
+  return <p style={{ fontWeight: 700 }}>Total of {totalAmount} exercises in this course.</p>;
 };
 
 const Course = ({ course }) => {
@@ -36,31 +36,59 @@ const Course = ({ course }) => {
 };
 
 const App = () => {
-  const course = {
-    id: 1,
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10,
-        id: 1,
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7,
-        id: 2,
-      },
-      {
-        name: 'State of a component',
-        exercises: 14,
-        id: 3,
-      },
-    ],
-  };
+  const courses = [
+    {
+      name: 'Half Stack application development',
+      id: 1,
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1,
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2,
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3,
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4,
+        },
+      ],
+    },
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1,
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2,
+        },
+      ],
+    },
+  ];
+
+  const listOfCourses = courses.map((course) => {
+    return <Course key={course.id} course={course} />;
+  });
 
   return (
     <div>
-      <Course course={course} />
+      <h1>Web dev curriculum</h1>
+      {listOfCourses}
     </div>
   );
 };
