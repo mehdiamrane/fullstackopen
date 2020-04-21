@@ -20,21 +20,17 @@ const Content = ({ parts }) => {
   return <>{listOfParts}</>;
 };
 
-// const Total = (props) => {
-//   return (
-//     <p>
-//       Number of exercises{' '}
-//       {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}
-//     </p>
-//   );
-// };
+const Total = ({ parts }) => {
+  const totalAmount = parts.reduce((sum, part) => sum + part.exercises, 0);
+  return <p>Total of {totalAmount} exercises in this course.</p>;
+};
 
 const Course = ({ course }) => {
   return (
     <>
       <Header name={course.name} />
       <Content parts={course.parts} />
-      {/* <Total parts={course.parts} /> */}
+      <Total parts={course.parts} />
     </>
   );
 };
