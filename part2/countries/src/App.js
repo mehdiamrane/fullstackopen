@@ -19,6 +19,10 @@ const App = () => {
     setSearchValue(e.target.value);
   };
 
+  const showCountryOnClick = (countryName) => {
+    setSearchValue(countryName);
+  };
+
   const matchingCountries = countriesData.filter((country) => {
     return country.name.toLowerCase().includes(searchValue.toLowerCase());
   });
@@ -46,7 +50,9 @@ const App = () => {
 
       {(searchOutcome === 'oneMatch' && <Country country={matchingCountries[0]} />) ||
         (searchOutcome === 'noMatch' && <Info case={searchOutcome} />) ||
-        (searchOutcome === 'manyMatches' && <CountriesList countries={matchingCountries} />) ||
+        (searchOutcome === 'manyMatches' && (
+          <CountriesList countries={matchingCountries} handleClick={showCountryOnClick} />
+        )) ||
         (searchOutcome === 'tooMany' && <Info case={searchOutcome} />) ||
         (searchOutcome === 'empty' && <Info case={searchOutcome} />)}
     </div>
