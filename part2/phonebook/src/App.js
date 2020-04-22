@@ -33,18 +33,28 @@ const App = () => {
         );
         const changedPerson = { ...personToUpdate, number: newNumber };
 
-        personService.update(personToUpdate.id, changedPerson).then((updatedPerson) => {
-          setPersons(
-            persons.map((person) => (person.id !== personToUpdate.id ? person : updatedPerson))
-          );
-          setNewName('');
-          setNewNumber('');
-          setAlertType('success');
-          setAlertMessage(`${updatedPerson.name}'s number was updated`);
-          setTimeout(() => {
-            setAlertMessage(null);
-          }, 5000);
-        });
+        personService
+          .update(personToUpdate.id, changedPerson)
+          .then((updatedPerson) => {
+            setPersons(
+              persons.map((person) => (person.id !== personToUpdate.id ? person : updatedPerson))
+            );
+            setNewName('');
+            setNewNumber('');
+            setAlertType('success');
+            setAlertMessage(`${updatedPerson.name}'s number was updated`);
+            setTimeout(() => {
+              setAlertMessage(null);
+            }, 5000);
+          })
+          .catch((error) => {
+            setAlertType('error');
+            setAlertMessage(`${personToUpdate.name} was already removed from server`);
+            setTimeout(() => {
+              setAlertMessage(null);
+            }, 5000);
+            setPersons(persons.filter((person) => person.id !== personToUpdate.id));
+          });
       }
     } else {
       const newPersonToAdd = { name: newName, number: newNumber };
