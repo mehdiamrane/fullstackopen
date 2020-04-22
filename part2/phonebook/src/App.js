@@ -22,7 +22,22 @@ const App = () => {
     e.preventDefault();
 
     if (nameExists) {
-      alert(`${newName} is already added to phonebook`);
+      if (
+        window.confirm(`${newName} is already added to phonebook, replace old number with new one?`)
+      ) {
+        const personToUpdate = persons.find(
+          (person) => person.name.toLowerCase() === newName.toLowerCase()
+        );
+        const changedPerson = { ...personToUpdate, number: newNumber };
+
+        personService.update(personToUpdate.id, changedPerson).then((updatedPerson) => {
+          setPersons(
+            persons.map((person) => (person.id !== personToUpdate.id ? person : updatedPerson))
+          );
+          setNewName('');
+          setNewNumber('');
+        });
+      }
     } else {
       const newPersonToAdd = { name: newName, number: newNumber };
       personService.create(newPersonToAdd).then((addedPerson) => {
