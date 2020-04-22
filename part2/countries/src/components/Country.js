@@ -1,4 +1,5 @@
 import React from 'react';
+import Weather from './Weather';
 
 const Country = ({ country }) => {
   const languagesList = country.languages.map((lang) => {
@@ -12,6 +13,8 @@ const Country = ({ country }) => {
       <h4>Languages</h4>
       <ul>{languagesList}</ul>
       <img src={country.flag} height='50px' alt={`${country.name} flag`} />
+
+      <Weather city={country.capital} />
     </>
   );
 };
