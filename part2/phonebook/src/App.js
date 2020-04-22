@@ -3,12 +3,15 @@ import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import personService from './services/persons';
+import Alert from './components/Alert';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [searchedName, setSearchedName] = useState('');
+  const [alertMessage, setAlertMessage] = useState(null);
+  const [alertType, setAlertType] = useState(null);
 
   useEffect(() => {
     personService.getAll().then((initialPersons) => {
@@ -36,6 +39,11 @@ const App = () => {
           );
           setNewName('');
           setNewNumber('');
+          setAlertType('success');
+          setAlertMessage(`${updatedPerson.name}'s number was updated`);
+          setTimeout(() => {
+            setAlertMessage(null);
+          }, 5000);
         });
       }
     } else {
@@ -44,6 +52,11 @@ const App = () => {
         setPersons(persons.concat(addedPerson));
         setNewName('');
         setNewNumber('');
+        setAlertType('success');
+        setAlertMessage(`${addedPerson.name} was added to the phonebook`);
+        setTimeout(() => {
+          setAlertMessage(null);
+        }, 5000);
       });
     }
   };
@@ -70,6 +83,11 @@ const App = () => {
     if (window.confirm(`Do you really want to delete ${personToRemove.name}?`)) {
       personService.remove(idToRemove).then(() => {
         setPersons(persons.filter((person) => person.id !== idToRemove));
+        setAlertType('success');
+        setAlertMessage(`${personToRemove.name} was deleted from phonebook`);
+        setTimeout(() => {
+          setAlertMessage(null);
+        }, 5000);
       });
     }
   };
@@ -77,6 +95,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Alert message={alertMessage} type={alertType} />
       <Filter value={searchedName} handleOnChange={handleSearchedNameChange} />
 
       <h2>Add to phone book</h2>
